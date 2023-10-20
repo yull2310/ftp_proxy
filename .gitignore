@@ -1,0 +1,4 @@
+.vagrant
+pftp.pid
+misc/test/data
+pftp_bin

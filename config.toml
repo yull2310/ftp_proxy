@@ -1,0 +1,51 @@
+max_connections = 1000
+idle_timeout = 900
+transfer_timeout = 600
+keepalive_time = 600
+remote_addr = "127.0.0.1:21"
+
+listen_addr = "192.168.10.15:2121"
+masquerade_ip = "192.168.10.15"
+
+# Configure about proxy features
+## Can set welcome message when first connect to pftp
+## If not set, pftp will send remote_addr server's welcome message
+welcome_message = "sample pftp server ready"
+
+## Send proxy protocol to origin server when user login process
+send_proxy_protocol = false # If true, pftp will send PROXY command to origin ftp server (default : false)
+
+## Use data channel proxy
+## Default value is false
+data_channel_proxy = true
+
+## Set listen port range for data connection.
+## Comment out this parameter means full range.
+## If set min > max of illegal numbers, pftp will set full range too.
+data_listen_port_range = "5000-7000" # "min-max"(default : random)
+
+## This configure set data connect mode between pftp and origin ftp server.
+## If set passive/pasv, pftp always use passive mode for connect to origin.
+## Set client(the default setup), use client's connected mode.
+transfer_mode = "pasv"  # PASV / Passive / PORT / Active / client (default : client)
+
+## Should we ignore the passive data channel IP sent by the origin FTP server ? (default: false)
+ignore_passive_ip = false
+
+[tls]
+## Set SSL certification and secret key file's path
+## cipher_suite set by IANA ciphersuites. if not set, or no available names, use hardware default ciphersuites
+cert = "./tls/server.crt"
+key = "./tls/server.key"
+#cipher_suite = "TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+# ca_cert = "./tls/ca_cert.crt"
+
+## Make sure TLS protocol range allowed in origin ftp server
+## If only one protocol support, set min and max to same
+## Can set TLSv1 TLSv1.1 TLSv1.2
+min_protocol = "TLSv1"
+max_protocol = "TLSv1"
+
+[webapiserver]
+# %s replace by username on running
+uri = "https://192.168.10.34:8080/getFtpLoginInfo?username=%s"
